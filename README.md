@@ -10,6 +10,8 @@ yfscraper uses [Selenium](https://selenium-python.readthedocs.io) to scrape data
 pip install git+https://github.com/adam42739/yf-scraper.git#egg=yfscraper
 ```
 
+**_Note: A recent version of Google Chrome must be installed on your system._**
+
 ## Usage
 
 ```python
