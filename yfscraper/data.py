@@ -2,6 +2,7 @@ from yfscraper import scraper
 import os
 from yfscraper import metadata
 import datetime
+import pandas
 
 
 def download_data(tickers, downloads, base):
@@ -15,3 +16,7 @@ def download_data(tickers, downloads, base):
             data[ticker] = datetime.datetime.today()
     metadata.write_metadata(data, base)
     return failed
+
+def get_data(ticker, base):
+    path = scraper.download_ticker_path(ticker, base)
+    return pandas.read_csv(path)
