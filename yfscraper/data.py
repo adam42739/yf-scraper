@@ -1,0 +1,17 @@
+from yfscraper import scraper
+import os
+from yfscraper import metadata
+import datetime
+
+
+def download_data(tickers, downloads, base):
+    data = metadata.get_metadata(base)
+    failed = scraper.download_tickers(tickers, downloads)
+    for ticker in tickers:
+        if ticker not in failed:
+            cur_path = scraper.download_ticker_path(ticker, downloads)
+            new_path = scraper.download_ticker_path(ticker, base)
+            os.rename(cur_path, new_path)
+            data[ticker] = datetime.datetime.today()
+    metadata.write_metadata(data, base)
+    return failed
