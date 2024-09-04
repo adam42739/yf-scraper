@@ -62,8 +62,12 @@ def _rm_crdownload(stocks, downloads):
             os.remove(path)
 
 
+def download_ticker_path(ticker, downloads):
+    return downloads + _yahoo_ticker_format(ticker) + ".csv"
+
+
 def _exists(ticker, downloads):
-    return os.path.exists(downloads + _yahoo_ticker_format(ticker) + ".csv")
+    return os.path.exists(download_ticker_path(ticker, downloads))
 
 
 def _get_failed(stocks, downloads):
