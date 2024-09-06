@@ -1,5 +1,9 @@
 # yf-scraper
 
+## Note
+
+**_Since Yahoo Finance historical data has become a paid service, yf-scraper no longer works._**
+
 ## Introduction
 
 yfscraper uses [Selenium](https://selenium-python.readthedocs.io) to scrape data from [yahoo finance](https://finance.yahoo.com).
