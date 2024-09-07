@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="yfscraper",
-    version="0.1.0",
+    version="0.2.0",
     description="Tool for scraping stock data from yahoo.com",
     url="https://github.com/adam42739/yf-scraper",
     author="Adam Lynch",
