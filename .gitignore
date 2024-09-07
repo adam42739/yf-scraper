@@ -1,5 +1,8 @@
-env
-main.py
-yfscraper/__pycache__
-tests.py
-base
+/env
+/main.py
+/yfscraper/__pycache__
+/tests.py
+/base_v1
+/base_v2
+/yfscraper/v1/__pycache__
+/yfscraper/v2/__pycache__
