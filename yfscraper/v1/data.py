@@ -1,6 +1,6 @@
-from yfscraper import scraper
+from yfscraper.v1 import scraper
 import os
-from yfscraper import metadata
+from yfscraper.v1 import metadata
 import datetime
 import pandas
 
