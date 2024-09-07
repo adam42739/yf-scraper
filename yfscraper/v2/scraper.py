@@ -18,16 +18,12 @@ YAHOO_LINK3 = "&period2="
 def _yahoo_url(ticker, start_date, end_date):
     return (
         YAHOO_LINK1
-        + _yahoo_ticker_format(ticker)
+        + ticker
         + YAHOO_LINK2
         + str(_yahoo_date_number(start_date))
         + YAHOO_LINK3
         + str(_yahoo_date_number(end_date))
     )
-
-
-def _yahoo_ticker_format(ticker):
-    return ticker.upper().replace(".", "-")
 
 
 COLS = {
@@ -43,19 +39,12 @@ COLS = {
 
 def get_price_df(ticker, start_date, end_date):
     headers = {"User-Agent": "Mozilla/5.0"}
-    url = _yahoo_url(_yahoo_ticker_format(ticker), start_date, end_date)
+    url = _yahoo_url(ticker, start_date, end_date)
     text = requests.get(url, headers=headers).text
     df = pandas.read_html(text)
     df = df[0]
     df = df.rename(COLS, axis="columns")
-    df = df[["Date", "Open", "High", "Low", "Close"]]
-    print(df.head())
-
-
-START_DATE = datetime.datetime(2020, 1, 1)
-END_DATE = datetime.datetime(2021, 1, 1)
-
-
-get_price_df("aapl", START_DATE, END_DATE)
-
-a = 0
+    if "Date" in df:
+        return df[list(COLS.values())]
+    else:
+        return pandas.DataFrame()
