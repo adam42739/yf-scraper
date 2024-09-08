@@ -8,7 +8,7 @@ setup(
     author="Adam Lynch",
     author_email="aclynch@umich.edu",
     license="MIT License",
-    packages=["yfscraper"],
+    packages=["yfscraper", "yfscraper.v1", "yfscraper.v2"],
     install_requires=[
         "pandas>=2.2.2",
         "selenium>=4.24.0",
