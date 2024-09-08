@@ -45,6 +45,9 @@ def get_price_df(ticker, start_date, end_date):
     df = pandas.read_html(io.StringIO(text))
     df = df[0]
     df = df.rename(COLS, axis="columns")
+    df["Open"] = df["Open"].astype(str)
+    df = df[~df["Open"].str.contains("[a-zA-Z]")]
+    df["Open"] = df["Open"].astype(float)
     df["Date"] = pandas.to_datetime(df["Date"], format="%b %d, %Y")
     if "Date" in df:
         return df[list(COLS.values())]
