@@ -8,7 +8,7 @@ def _yahoo_ticker_format(ticker):
     return ticker.upper().replace(".", "-")
 
 
-def _yahoo_format(tickers):
+def yahoo_format(tickers):
     new_tickers = []
     for ticker in tickers:
         new_tickers.append(_yahoo_ticker_format(ticker))
@@ -28,7 +28,7 @@ def _update_price_file(ticker, df, base):
 
 
 def download_data(tickers, base, end_date):
-    tickers = _yahoo_format(tickers)
+    tickers = yahoo_format(tickers)
     failed = []
     data = metadata.get_metadata(base)
     for ticker in tickers:
