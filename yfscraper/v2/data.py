@@ -22,9 +22,9 @@ def _update_price_file(ticker, df, base):
         df = pandas.concat([df, df_old])
         df = df.drop_duplicates()
         df = df.sort_values(by=["Date"], ascending=False)
-        df.to_csv(path)
+        df.to_csv(path, index=False)
     else:
-        df.to_csv(path)
+        df.to_csv(path, index=False)
 
 
 def download_data(tickers, base, end_date):
