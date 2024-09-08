@@ -20,7 +20,7 @@ def _update_price_file(ticker, df, base):
     if os.path.exists(path):
         df_old = get_data(ticker, base)
         df = pandas.concat([df, df_old])
-        df = df.drop_duplicates()
+        df = df.drop_duplicates(subset="Date", keep="last")
         df = df.sort_values(by=["Date"], ascending=False)
         df.to_csv(path, index=False)
     else:
