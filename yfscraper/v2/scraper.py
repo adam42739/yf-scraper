@@ -1,6 +1,7 @@
 import requests
 import pandas
 import datetime
+import io
 
 YAHOO_START_DATE = datetime.datetime(1970, 1, 1)
 YAHOO_DATE_ITER = 86400
@@ -41,7 +42,7 @@ def get_price_df(ticker, start_date, end_date):
     headers = {"User-Agent": "Mozilla/5.0"}
     url = _yahoo_url(ticker, start_date, end_date)
     text = requests.get(url, headers=headers).text
-    df = pandas.read_html(text)
+    df = pandas.read_html(io.StringIO(text))
     df = df[0]
     df = df.rename(COLS, axis="columns")
     if "Date" in df:
