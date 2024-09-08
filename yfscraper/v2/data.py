@@ -4,14 +4,14 @@ import pandas
 import os
 
 
-def _yahoo_ticker_format(ticker):
+def yahoo_ticker_format(ticker):
     return ticker.upper().replace(".", "-")
 
 
 def yahoo_format(tickers):
     new_tickers = []
     for ticker in tickers:
-        new_tickers.append(_yahoo_ticker_format(ticker))
+        new_tickers.append(yahoo_ticker_format(ticker))
     return new_tickers
 
 
@@ -47,7 +47,7 @@ def download_data(tickers, base, end_date):
 
 
 def get_data(ticker, base):
-    path = base + _yahoo_ticker_format(ticker) + ".csv"
+    path = base + yahoo_ticker_format(ticker) + ".csv"
     df = pandas.read_csv(path)
     df["Date"] = pandas.to_datetime(df["Date"])
     return df
