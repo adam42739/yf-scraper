@@ -15,7 +15,7 @@ def yahoo_format(tickers):
     return new_tickers
 
 
-def _update_price_file(ticker, df, base):
+def _update_price_file(ticker, df, base, data, end_date):
     path = base + ticker + ".csv"
     if os.path.exists(path):
         df_old = get_data(ticker, base)
@@ -23,8 +23,11 @@ def _update_price_file(ticker, df, base):
         df = df.drop_duplicates(subset="Date", keep="last")
         df = df.sort_values(by=["Date"], ascending=False)
         df.to_csv(path, index=False)
+        data[ticker]["end_date"] = end_date
     else:
         df.to_csv(path, index=False)
+        start_date = df["Date"].min()
+        data[ticker] = {"start_date": start_date, "end_date": end_date}
 
 
 def download_data(tickers, base, end_date):
@@ -34,14 +37,13 @@ def download_data(tickers, base, end_date):
     for ticker in tickers:
         start_date = scraper.YAHOO_START_DATE
         if ticker in data:
-            start_date = data[ticker]
+            start_date = data[ticker]["end_date"]
         if end_date > start_date:
             df = scraper.get_price_df(ticker, start_date, end_date)
             if df.empty:
                 failed.append(ticker)
             else:
-                data[ticker] = end_date
-                _update_price_file(ticker, df, base)
+                _update_price_file(ticker, df, base, data, end_date)
     metadata.write_metadata(data, base)
     return failed
 
