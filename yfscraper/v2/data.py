@@ -1,6 +1,7 @@
 from yfscraper.v2 import scraper
 from yfscraper.v1 import metadata
 import pandas
+import os
 
 
 def _yahoo_ticker_format(ticker):
@@ -12,6 +13,18 @@ def _yahoo_format(tickers):
     for ticker in tickers:
         new_tickers.append(_yahoo_ticker_format(ticker))
     return new_tickers
+
+
+def _update_price_file(ticker, df, base):
+    path = base + ticker + ".csv"
+    if os.path.exists(path):
+        df_old = get_data(ticker, base)
+        df = pandas.concat([df, df_old])
+        df = df.drop_duplicates()
+        df = df.sort_values(by=["Date"], ascending=False)
+        df.to_csv(path)
+    else:
+        df.to_csv(path)
 
 
 def download_data(tickers, base, end_date):
@@ -28,11 +41,13 @@ def download_data(tickers, base, end_date):
                 failed.append(ticker)
             else:
                 data[ticker] = end_date
-                df.to_csv(base + ticker + ".csv")
+                _update_price_file(ticker, df, base)
     metadata.write_metadata(data, base)
     return failed
 
 
 def get_data(ticker, base):
     path = base + _yahoo_ticker_format(ticker) + ".csv"
-    return pandas.read_csv(path)
+    df = pandas.read_csv(path)
+    df["Date"] = pandas.to_datetime(df["Date"])
+    return df
