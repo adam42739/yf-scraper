@@ -39,12 +39,15 @@ def download_data(tickers, base, end_date):
         if ticker in data:
             start_date = data[ticker]["end_date"]
         if end_date > start_date:
-            df = scraper.get_price_df(ticker, start_date, end_date)
+            try:
+                df = scraper.get_price_df(ticker, start_date, end_date)
+            except:
+                df = pandas.DataFrame()
             if df.empty:
                 failed.append(ticker)
             else:
                 _update_price_file(ticker, df, base, data, end_date)
-    metadata.write_metadata(data, base)
+        metadata.write_metadata(data, base)
     return failed
 
 
