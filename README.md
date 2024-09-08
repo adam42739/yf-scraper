@@ -1,12 +1,12 @@
 # yf-scraper
 
-## Note
-
-**_Since Yahoo Finance historical data has become a paid service, yf-scraper no longer works._**
-
 ## Introduction
 
-yfscraper uses [Selenium](https://selenium-python.readthedocs.io) to scrape data from [yahoo finance](https://finance.yahoo.com).
+yfscraper scrapes historical stock price data from [Yahoo Finance](https://finance.yahoo.com).
+
+## Note
+
+`yfscraper.v1` has been deprecated since Yahoo Finance historical data download has become a paid service. `yfscraper.v2` should be used instead which collects data by parsing HTML instead.
 
 ## Installation
 
@@ -14,18 +14,16 @@ yfscraper uses [Selenium](https://selenium-python.readthedocs.io) to scrape data
 pip install git+https://github.com/adam42739/yf-scraper.git#egg=yfscraper
 ```
 
-**_Note: A recent version of Google Chrome must be installed on your system._**
-
 ## Usage
 
 ```python
-import yfscraper as prices
+import yfscraper.v2 as prices
 ```
 
 ### Downloading price data to a directory
 
 ```python
-prices.download_data(tickers, downloads, base)
+prices.download_data(tickers, base, end_date)
 ```
 
 #### Parameters
@@ -34,13 +32,13 @@ prices.download_data(tickers, downloads, base)
 
 List of ticker to get pricing data for.
 
-> **`downloads`: _str_**
-
-Path to directory Chrome downloads files to.
-
 > **`base`: _str_**
 
 Path to directory where CSV files will be saved.
+
+> **`end_date`: _datetime.datetime_**
+
+The last date to for which prices will be downloaded.
 
 #### Returns
 
@@ -51,7 +49,7 @@ List of tickers yfscraper failed to get data for.
 #### Example
 
 ```python
-prices.download_data(["aapl", "msft"],"C:/Users/user1/Downloads/", "base/")
+prices.download_data(["aapl", "msft"],"base/", datetime.datetime.today())
 ```
 
 ### Reading CSVs from the save directory
