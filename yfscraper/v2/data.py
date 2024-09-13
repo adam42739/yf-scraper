@@ -2,6 +2,7 @@ from yfscraper.v2 import scraper
 from yfscraper.v1 import metadata
 import pandas
 import os
+import datetime
 
 
 def yahoo_ticker_format(ticker):
@@ -38,7 +39,7 @@ def download_data(tickers, base, end_date):
         start_date = scraper.YAHOO_START_DATE
         if ticker in data:
             start_date = data[ticker]["end_date"]
-        if end_date > start_date:
+        if end_date > start_date + datetime.timedelta(3):
             try:
                 df = scraper.get_price_df(ticker, start_date, end_date)
             except:
