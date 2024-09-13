@@ -2,6 +2,8 @@ import requests
 import pandas
 import datetime
 import io
+import time
+import random
 
 YAHOO_START_DATE = datetime.datetime(1970, 1, 1)
 YAHOO_DATE_ITER = 86400
@@ -41,6 +43,7 @@ COLS = {
 def get_price_df(ticker, start_date, end_date):
     headers = {"User-Agent": "Mozilla/5.0"}
     url = _yahoo_url(ticker, start_date, end_date)
+    time.sleep(random.randint(15, 30))
     text = requests.get(url, headers=headers).text
     df = pandas.read_html(io.StringIO(text))
     df = df[0]
