@@ -6,3 +6,5 @@
 /base_v2
 /yfscraper/v1/__pycache__
 /yfscraper/v2/__pycache__
+/build
+/yfscraper.egg-info
